@@ -2,7 +2,7 @@ RewriteEngine on
 
 # If the application is not in the root directory
 # Replace /www with / if your application is at the root of your domain
-RewriteBase /www/public
+RewriteBase /www
 
 # If the request is for the root directory
 RewriteRule ^$ public/ [L]

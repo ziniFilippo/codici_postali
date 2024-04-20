@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Caps</title>
+    
+</head>
+<body>
+        <h2>Here are all the CAPs</h2>
+        <script>
+            async function getAll(){
+                const data = await fetch("caps");
+                const caps = await data.json();
+                console.log(caps);
+            }
+            onload = function() {
+                getAll();
+            }
+        </script>
+        <!-- back to home -->
+        <a href="api">Back to APIs</a>
+</body>
+</html>
