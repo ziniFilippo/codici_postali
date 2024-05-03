@@ -7,11 +7,22 @@
     
 </head>
 <body>
-        <h2>Cap</h2>
-        <form id="loginForm" action="api/cap" method="post">
+    
+        <h2 id="title"></h2>
+        <form id="update" method="post">
+            <input type="text" name="regione" placeholder="Insert a Region..." required><br>
+            <input type="text" name="provincia" placeholder="Insert a Province..." required><br>
             <button type="submit">Cap</button>
         </form>
+        <script>
+            var url = window.location.href;
+            url = url.split("/");
+            var cap = url[url.length-1];
+            document.getElementById("title").innerHTML = "Updating CAP N. " + cap; 
+            var form = document.getElementById("update");
+            form.action = "/www/api/cap/"+cap;
+        </script>
         <!-- back to home -->
-        <a href="api">Back to APIs</a>
+        <a href="/www/">Back to APIs</a>
 </body>
 </html>

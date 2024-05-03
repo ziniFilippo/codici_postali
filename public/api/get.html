@@ -9,16 +9,78 @@
 <body>
         <h2>Here are all the CAPs</h2>
         <script>
+        function remove(id){
+            let choice = confirm("Are you sure you want to delete this CAP?");
+            console.log("eliminata "+id);
+            if (choice == true){
+                var xhr = new XMLHttpRequest();
+                xhr.open("DELETE", "cap/" + id, true);
+                xhr.onload = function() {
+                    getAll();
+                }
+                xhr.send();
+            }
+            return;
+        }
+        function edit(id){
+            window.location.href = "update/"+id;
+        }
             async function getAll(){
                 const data = await fetch("caps");
                 const caps = await data.json();
                 console.log(caps);
+                
+                var results = document.getElementById("results");
+                results.innerHTML = "";
+
+                var table = document.createElement('table');
+                var headerRow = document.createElement('tr');
+                
+                ['CAP','REGIONE','PROVINCIA'].forEach(function(header) {
+                    var th = document.createElement('th');
+                    th.textContent = header;
+                    headerRow.appendChild(th);
+                });
+                
+                table.appendChild(headerRow);
+
+                for (var i = 0; i < caps.length; i++) {
+                    var row = document.createElement('tr');
+                    ['CAP','REGIONE','PROVINCIA'].forEach(function(field) {
+                        var td = document.createElement('td');
+                        td.textContent = caps[i][field];
+                        row.appendChild(td);
+                    });
+                    var cap = caps[i]['CAP'];
+                    var editButton = document.createElement('button');
+                    editButton.textContent = 'edit';
+                    editButton.id = cap;
+                    editButton.addEventListener('click', function(){
+                        edit(this.getAttribute("id"));
+                    });
+                    var editCell = document.createElement('td');
+                    editCell.appendChild(editButton);
+                    row.appendChild(editCell);
+
+                    var deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'delete';
+                    deleteButton.id = cap;
+                    deleteButton.addEventListener('click', function(){
+                        remove(this.getAttribute("id"));
+                    });
+                    var deleteCell = document.createElement('td');
+                    deleteCell.appendChild(deleteButton);
+                    row.appendChild(deleteCell);
+                    table.appendChild(row);
+                }
+                results.appendChild(table);
             }
             onload = function() {
                 getAll();
             }
         </script>
+        <div id = "results"></div>
         <!-- back to home -->
-        <a href="api">Back to APIs</a>
+        <a href="/www/">Back to APIs</a>
 </body>
 </html>
